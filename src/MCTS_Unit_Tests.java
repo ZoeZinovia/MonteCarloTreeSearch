@@ -409,7 +409,7 @@ class MCTS_Unit_Tests {
 		s2.setParent(s1);s3.setParent(s2);s4.setParent(s3);
 		s1.getChildren().add(s2); s2.getChildren().add(s3); s3.getChildren().add(s4); 
 		
-		assertEquals(s4,s1.selectPromisingState());
+		assertEquals(s4,MonteCarloTreeSearch.selectPromisingState(s1, 1.41));
 		
 		//Test2
 		MonteCarloTreeSearch.State s5 = new MonteCarloTreeSearch.State(new TicTacToe(ex1), null, 2);
@@ -426,7 +426,7 @@ class MCTS_Unit_Tests {
 		s6.setParent(s5);s7.setParent(s5);s8.setParent(s7);
 		s5.getChildren().add(s6); s5.getChildren().add(s7); s7.getChildren().add(s8); 
 		
-		assertEquals(s6, s5.selectPromisingState());
+		assertEquals(s6, MonteCarloTreeSearch.selectPromisingState(s5, 1.41));
 	}
 	
 	
@@ -453,15 +453,15 @@ class MCTS_Unit_Tests {
 		s2.setParent(s1); 
 		
 		s2.setWinScore(1); s2.setVisits(2);
-		assertEquals(1.545, UCT.uctValue(s2.getParent().getVisits(), s2.getWinScore(), s2.getVisits()), 0.001);
+		assertEquals(1.545, UCT.uctValue(s2.getParent().getVisits(), s2.getWinScore(), s2.getVisits(), 1.41), 0.001);
 		
 		s1.setVisits(15);//parent state
 		s2.setWinScore(3); s2.setVisits(10);
-		assertEquals(1.034, UCT.uctValue(s2.getParent().getVisits(), s2.getWinScore(), s2.getVisits()), 0.001);
+		assertEquals(1.034, UCT.uctValue(s2.getParent().getVisits(), s2.getWinScore(), s2.getVisits(), 1.41), 0.001);
 		
 		s1.setVisits(7);//parent state
 		s2.setWinScore(2); s2.setVisits(5);
-		assertEquals(1.280, UCT.uctValue(s2.getParent().getVisits(), s2.getWinScore(), s2.getVisits()), 0.001);
+		assertEquals(1.280, UCT.uctValue(s2.getParent().getVisits(), s2.getWinScore(), s2.getVisits(), 1.41), 0.001);
 	}
 	
 	@Test
@@ -493,17 +493,18 @@ class MCTS_Unit_Tests {
 		s2.setWinScore(2); s2.setVisits(3);
 		s3.setWinScore(2); s3.setVisits(5);
 		s4.setWinScore(2); s4.setVisits(4);
-		assertEquals(s2, UCT.maxUCT(s1));
+		UCT uct1 = new UCT(s1);
+		assertEquals(s2, uct1.maxUCT(1.41));
 		
 		s2.setWinScore(1); s2.setVisits(3);
 		s3.setWinScore(2); s3.setVisits(5);
 		s4.setWinScore(3); s4.setVisits(4);
-		assertEquals(s4, UCT.maxUCT(s1));
+		assertEquals(s4, uct1.maxUCT(1.41));
 		
 		s2.setWinScore(1); s2.setVisits(3);
 		s3.setWinScore(4); s3.setVisits(5);
 		s4.setWinScore(3); s4.setVisits(4);
-		assertEquals(s3, UCT.maxUCT(s1));
+		assertEquals(s3, uct1.maxUCT(1.41));
 	}
 	
 	@Test
@@ -531,7 +532,7 @@ class MCTS_Unit_Tests {
 	    MonteCarloTreeSearch.State solution1 = new MonteCarloTreeSearch.State(new TicTacToe(sol1), null, 1); //player 2 to play next
 	    MonteCarloTreeSearch.State solution2 = new MonteCarloTreeSearch.State(new TicTacToe(sol2), null, 2); //player 1 to play next
 	    
-	    MonteCarloTreeSearch mcts = new MonteCarloTreeSearch(3000, 10);
+	    MonteCarloTreeSearch mcts = new MonteCarloTreeSearch(3000, 10, 1.41);
 
 	    assertEquals(solution1, mcts.solve(s1));
 	    assertEquals(solution2, mcts.solve(s2));

@@ -1,11 +1,18 @@
 import java.util.Collections;
 import java.util.Comparator;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class UCT.
  */
 public class UCT {
+
+	private MonteCarloTreeSearch.State state;
+	
+	
+	public UCT(MonteCarloTreeSearch.State state) {
+		this.state = state;
+	}
 	
 	/**
 	 * Uct value.
@@ -15,21 +22,20 @@ public class UCT {
 	 * @param nodeVisit the node visit
 	 * @return the double
 	 */
-	public static double uctValue(int parentVisit, double nodeWinScore, int nodeVisit) {
+	public static double uctValue(int parentVisit, double nodeWinScore, int nodeVisit, double C) {
 		if(nodeVisit == 0) { //Both terms will have 0 in the denominator so will tend to infinity (actually non-real)
 			return Integer.MAX_VALUE;
 		}
-		return ((double)nodeWinScore/(double)nodeVisit) + 1.41*Math.sqrt(Math.log(parentVisit)/(double) nodeVisit);
+		return ((double)nodeWinScore/(double)nodeVisit) + C*Math.sqrt(Math.log(parentVisit)/(double) nodeVisit);
 	}
 	
 	/**
 	 * Max UCT.
 	 *
-	 * @param currentState the current state
 	 * @return the monte carlo tree search. state
 	 */
-	public static MonteCarloTreeSearch.State maxUCT(MonteCarloTreeSearch.State currentState) {
-		int parentVisit = currentState.getVisits();
-		return Collections.max(currentState.getChildren(), Comparator.comparing(c -> uctValue(parentVisit, c.getWinScore(), c.getVisits())));
+	public MonteCarloTreeSearch.State maxUCT(double C) {
+		int parentVisit = state.getVisits();
+		return Collections.max(state.getChildren(), Comparator.comparing(c -> uctValue(parentVisit, c.getWinScore(), c.getVisits(), C)));
 	}
 }

@@ -24,7 +24,7 @@ public class Main {
 		}
 		
 		//Solve round
-		MonteCarloTreeSearch MCTS = new MonteCarloTreeSearch(10000, 10); //input is the maximum time that the algorithm can run (in milliseconds) and the points added for a win
+		MonteCarloTreeSearch MCTS = new MonteCarloTreeSearch(10000, 10, 1.41); //input is the maximum time that the algorithm can run (in milliseconds) and the points added for a win
 	    MonteCarloTreeSearch.State initialState = new MonteCarloTreeSearch.State(new TicTacToe(inputBoard), null); //Can input the current player or program calculates it. player 2 to play next. Will need to be changed on who starts the game
 	    MonteCarloTreeSearch.State solution = MCTS.solve(initialState);
 	    

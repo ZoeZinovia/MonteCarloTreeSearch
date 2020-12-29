@@ -55,8 +55,6 @@ public class MonteCarloTreeSearch {
 		public State(Ilayout layout, State parent) {
 			setLayout(layout);
 			setParent(parent);
-//			System.out.println(layout.getEmptyPositions().size());
-//			System.out.println(layout.getEmptyPositions().size()%2);
 			setPlayerNo(layout.getEmptyPositions().size()%2 == 0? 1: 2); //If there are an even number of X's and O's on the board, then player 1 will be next. Otherwise player 2 is next. 
 		}
 		
@@ -99,19 +97,6 @@ public class MonteCarloTreeSearch {
 		public void expandState() {
 			List<State> children = successors(this);
 			this.setChildren(children);
-		}
-		
-		/**
-		 * Select promising state.
-		 *
-		 * @return the state
-		 */
-		public State selectPromisingState() {
-			State currentState = this;
-			while(currentState.getChildren().size() != 0) {
-				currentState = UCT.maxUCT(currentState);
-			}
-			return currentState;
 		}
 		
 		/**
@@ -269,15 +254,18 @@ public class MonteCarloTreeSearch {
 	/** The win value. */
 	private int winValue;
 	
+	private double C;
+	
 	/**
 	 * Instantiates a new monte carlo tree search.
 	 *
 	 * @param maxDuration the max duration
 	 * @param winValue the win value
 	 */
-	public MonteCarloTreeSearch(int maxDuration, int winValue) {
+	public MonteCarloTreeSearch(int maxDuration, int winValue, double C) {
 		setMaxDuration(maxDuration);
 		setWinValue(winValue);
+		setC(C);
 	}
 	
 	/**
@@ -333,7 +321,7 @@ public class MonteCarloTreeSearch {
         long start = System.currentTimeMillis();
         while(System.currentTimeMillis() - start < maxDuration) {
         	//Step 1. Selection
-        	State promisingState = currentState.selectPromisingState();
+        	State promisingState = selectPromisingState(currentState, this.C);
         	
         	//Step 2. Expansion
         	promisingState.expandState();
@@ -354,18 +342,26 @@ public class MonteCarloTreeSearch {
         return winner;
 	}
 	
-//	public State getRandomChild(State state) {
-//		//Todo
-//		return null;
-//	}
-	
 	/**
- * Simulate playout.
- *
- * @param state the state
- * @return the int
- */
-public int simulatePlayout(State state) {
+	 * Select promising state.
+	 *
+	 * @return the state
+	 */
+	public static State selectPromisingState(State currentState, double C) {
+		while(currentState.getChildren().size() != 0) {
+			UCT uct = new UCT(currentState);
+			currentState = uct.maxUCT(C);
+		}
+		return currentState;
+	}
+	
+		/**
+	 * Simulate playout.
+	 *
+	 * @param state the state
+	 * @return the int
+	 */
+	public int simulatePlayout(State state) {
 		int playoutStatus = state.layout.getStatus();
 		if(playoutStatus != -1) // Means that the game is over
 			return playoutStatus;
@@ -428,4 +424,13 @@ public int simulatePlayout(State state) {
 	public void setWinValue(int winValue) {
 		this.winValue = winValue;
 	}
+
+	public double getC() {
+		return C;
+	}
+
+	public void setC(double c) {
+		C = c;
+	}
+	
 }
