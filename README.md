@@ -1,6 +1,6 @@
 # Monte Carlo Tree Search
 
-Implementation an AI agent for Tic Tac Toe and other games.  
+Implementation of an AI agent for Tic Tac Toe and other games.  
 
 ## Description
 
