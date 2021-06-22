@@ -1,6 +1,6 @@
 # Monte Carlo Tree Search
 
-Simple overview of use/purpose.
+Implementation an AI agent for Tic Tac Toe and other games.  
 
 ## Description
 
@@ -16,6 +16,8 @@ The MCTS algorithm is carried out in 4 main steps and these 4 steps are repeated
   2. Expansion: Once the leaf node is selected, it is expanded by creating its children.
   3. Simulation: A random rollout/playout takes place either for all children expanded in step 2 or only for one random child.
   4. Backpropagation: The result of the simulation is shared with all nodes on the path from the leaf to the root.
+
+![Image showing steps of the Monte Carlo Tree Search algorithm](https://miro.medium.com/max/2982/1*Ntm0xHhJ5jOgsL9AdB2kNw.jpeg)
 
 The MCTS portion of the project consists of 3 classes: MCTS, State and UCT, where the State class is nested in the MCTS class. This projevct follows the Strategy Design Pattern and therefore the MCTS class can be applied to any game that implements that methods defined by the Layout interface. In the case of this project, the Tic Tac Toe game has been developed.
 
