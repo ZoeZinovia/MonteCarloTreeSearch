@@ -29,4 +29,4 @@ The MCTS portion of the project consists of 3 classes: MCTS, State and UCT, wher
 
 ### Installing and using
 
-* Simply pull the code from this repository. If using Eclipe, IntelliJ or another IDE, main.java can be run. If running on terminal, src code needs to be compiled before running main.java.
+* Simply clone the code from this repository. If using Eclipe, IntelliJ or another IDE, main.java can be run. If running on terminal, src code needs to be compiled before running main.java.
