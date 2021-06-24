@@ -29,4 +29,21 @@ The MCTS portion of the project consists of 3 classes: MCTS, State and UCT, wher
 
 ### Installing and using
 
-* Simply clone the code from this repository. If using Eclipe, IntelliJ or another IDE, main.java can be run. If running on terminal, src code needs to be compiled before running main.java.
+* Simply clone the code from this repository. If using Eclipe, IntelliJ or another IDE, main.java can be run.
+* If running on terminal, src code needs to be compiled before running Main. This can be done by navigating into the src directory of the cloned the repository. Then run: ```javac -d ./../bin -sourcepath . Main.java ```. Then the application can be run from the bin directory with the following command: ```java Main```
+* The following command arguments are expected: 3 lines to represent the Tic Tac Toe board. Each "cell" of the board can contain an X, an O or a - to signify empty. See below for an example:
+  ```
+  >> java Main
+  >> X-O
+  >> OXO 
+  >> ---
+  ```
+* After a few milliseconds or seconds, the resultant board will be displayed. The result depends on the decision made by the algorithm and will differ since the algorithm is probabilistic. Below is an example board:  
+  ```
+  X-O
+  OXO 
+  --X
+  
+  Player 1 has won!
+  ```
+* The time that the algorithm has to "think" is a variable that can be changed in the Main.java function (line 27).
