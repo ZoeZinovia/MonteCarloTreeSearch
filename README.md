@@ -8,7 +8,7 @@ This project implements the Monte Carlo Tree Search (MCTS) algorithm that is wid
 
 Many of the predecessors to MCTS, such as Best First Search, explored the entire game tree, or a large portion thereof, e.g. with alpha-beta pruning. This approach is suitable for games with a small branching factor, such as 8-puzzle and Blocks World, but is not tenable for more complex games like chess and go. This led to the use of game tree search algorithms that only selectively grow a game tree. 
 
-In order to aoivd convergence to a local optimum, an “exploration-exploitation” trade off is introduced to MCTS in the form of the Upper Confidence bounds for Trees (UCT) algorithm.
+In order to avoid convergence to a local optimum, an “exploration-exploitation” trade off is introduced to MCTS in the form of the Upper Confidence bounds for Trees (UCT) algorithm.
 
 The MCTS algorithm is carried out in 4 main steps and these 4 steps are repeated until a given resource is depleted. The resources, in the case of this project, is time in milliseconds but can easily be adapted. The 4 steps are outlined below:
 
